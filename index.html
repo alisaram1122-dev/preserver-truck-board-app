@@ -11,298 +11,462 @@
 <link rel="apple-touch-icon" href="./icon-512.png">
 
 <meta name="theme-color" content="#d4af37">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
 
 body{
-    font-family:Arial,sans-serif;
-    background:#080808;
-    color:white;
-    min-height:100vh;
+  background:#080808;
+  color:white;
+  min-height:100vh;
 }
+
+/* HEADER */
 
 header{
-    background:linear-gradient(145deg,#111,#1c1c1c);
-    border-bottom:1px solid #d4af37;
-    padding:22px 16px;
-    text-align:center;
-    position:sticky;
-    top:0;
-    z-index:20;
+  background:linear-gradient(135deg,#111,#1c1c1c);
+  border-bottom:1px solid #d4af37;
+  padding:18px 25px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
-.logo{
-    width:65px;
-    height:65px;
-    border-radius:18px;
-    object-fit:cover;
-    border:2px solid #d4af37;
-    margin-bottom:8px;
+.logo-area{
+  display:flex;
+  align-items:center;
+  gap:14px;
 }
 
-header h1{
-    color:#d4af37;
-    font-size:22px;
-    letter-spacing:.5px;
+.logo-area img{
+  width:55px;
+  height:55px;
+  object-fit:contain;
+  border-radius:12px;
 }
 
-header p{
-    color:#aaa;
-    font-size:13px;
-    margin-top:5px;
+.logo-text h1{
+  color:#d4af37;
+  font-size:22px;
 }
+
+.logo-text p{
+  color:#aaa;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.contact-btn{
+  background:#d4af37;
+  color:#000;
+  border:none;
+  padding:11px 17px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+  text-align:center;
+  padding:45px 20px 25px;
+}
+
+.hero h2{
+  font-size:34px;
+  color:#d4af37;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#aaa;
+  font-size:15px;
+}
+
+/* SEARCH */
+
+.search-box{
+  max-width:650px;
+  margin:25px auto;
+  padding:0 20px;
+}
+
+.search-box input{
+  width:100%;
+  padding:15px 18px;
+  border-radius:10px;
+  border:1px solid #444;
+  background:#151515;
+  color:white;
+  outline:none;
+  font-size:15px;
+}
+
+.search-box input:focus{
+  border-color:#d4af37;
+}
+
+/* MAIN */
 
 .container{
-    width:94%;
-    max-width:1050px;
-    margin:20px auto 80px;
-}
-
-.search{
-    width:100%;
-    background:#171717;
-    border:1px solid #333;
-    color:white;
-    padding:15px 16px;
-    border-radius:14px;
-    outline:none;
-    font-size:15px;
-    margin-bottom:18px;
-}
-
-.search:focus{
-    border-color:#d4af37;
+  max-width:1100px;
+  margin:auto;
+  padding:10px 20px 50px;
 }
 
 .status{
-    text-align:center;
-    color:#aaa;
-    font-size:13px;
-    margin:12px 0 18px;
+  text-align:center;
+  color:#999;
+  margin:20px;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
-    gap:16px;
+.trucks{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;
 }
 
-.card{
-    background:linear-gradient(145deg,#171717,#101010);
-    border:1px solid #333;
-    border-radius:18px;
-    padding:18px;
-    box-shadow:0 8px 25px rgba(0,0,0,.35);
+/* TRUCK CARD */
+
+.truck-card{
+  background:linear-gradient(145deg,#151515,#0d0d0d);
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:20px;
+  transition:.25s;
+  box-shadow:0 8px 25px rgba(0,0,0,.35);
 }
 
-.card:hover{
-    border-color:#d4af37;
+.truck-card:hover{
+  transform:translateY(-4px);
+  border-color:#d4af37;
 }
 
 .card-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:17px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
 }
 
-.card-top h2{
-    color:#d4af37;
-    font-size:20px;
+.truck-number{
+  font-size:22px;
+  font-weight:bold;
+  color:#d4af37;
 }
 
-.badge{
-    background:#16803c;
-    padding:6px 9px;
-    border-radius:20px;
-    font-size:10px;
-    font-weight:bold;
+.available{
+  background:#173d24;
+  color:#62e58a;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
 }
 
 .info{
-    padding:8px 0;
-    border-bottom:1px solid #252525;
-    font-size:14px;
+  margin-top:10px;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid #222;
+  padding:9px 0;
+  gap:10px;
 }
 
 .label{
-    color:#888;
-    display:inline-block;
-    min-width:115px;
+  color:#888;
+  font-size:13px;
 }
 
-.contact{
-    width:100%;
-    margin-top:16px;
-    border:0;
-    padding:14px;
-    border-radius:12px;
-    background:#d4af37;
-    color:#080808;
-    font-weight:bold;
-    font-size:14px;
-    cursor:pointer;
+.value{
+  color:#eee;
+  font-size:13px;
+  text-align:right;
 }
 
-.contact:hover{
-    background:#f0cf55;
+.notes{
+  margin-top:15px;
+  padding:12px;
+  background:#111;
+  border-radius:8px;
+  color:#bbb;
+  font-size:13px;
 }
+
+/* EMPTY */
 
 .empty{
-    text-align:center;
-    padding:60px 20px;
-    color:#888;
+  text-align:center;
+  padding:50px 20px;
+  color:#777;
 }
 
-footer{
-    text-align:center;
-    color:#666;
-    font-size:11px;
-    padding:25px;
+.empty h3{
+  color:#d4af37;
+  margin-bottom:8px;
 }
+
+/* MODAL */
 
 .modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.82);
-    z-index:100;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  z-index:500;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
 .modal-box{
-    width:100%;
-    max-width:410px;
-    background:#171717;
-    border:1px solid #d4af37;
-    border-radius:20px;
-    padding:25px;
-    position:relative;
+  width:100%;
+  max-width:430px;
+  background:#151515;
+  border:1px solid #d4af37;
+  border-radius:16px;
+  padding:25px;
+  position:relative;
+  box-shadow:0 15px 50px rgba(0,0,0,.7);
 }
 
 .close{
-    position:absolute;
-    right:17px;
-    top:10px;
-    color:#aaa;
-    font-size:28px;
-    cursor:pointer;
+  position:absolute;
+  right:18px;
+  top:13px;
+  font-size:25px;
+  color:#aaa;
+  cursor:pointer;
 }
 
 .modal-box h2{
-    text-align:center;
-    color:#d4af37;
-    margin-bottom:20px;
+  color:#d4af37;
+  margin-bottom:20px;
 }
 
 .contact-info{
-    color:#ddd;
-    padding:8px 0;
+  background:#0d0d0d;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
 }
 
-.action{
-    display:block;
-    text-align:center;
-    text-decoration:none;
-    padding:13px;
-    margin-top:10px;
-    border-radius:11px;
-    background:#d4af37;
-    color:#111;
-    font-weight:bold;
+.contact-info p{
+  margin:9px 0;
+  color:#ccc;
+  font-size:14px;
 }
+
+.contact-info strong{
+  color:#d4af37;
+}
+
+.contact-link{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  padding:13px;
+  border-radius:9px;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+.call{
+  background:#d4af37;
+  color:#000;
+}
+
+.email{
+  border:1px solid #d4af37;
+  color:#d4af37;
+}
+
+/* FOOTER */
+
+footer{
+  border-top:1px solid #222;
+  text-align:center;
+  padding:22px;
+  color:#666;
+  font-size:12px;
+}
+
+/* MOBILE */
 
 @media(max-width:600px){
-    .grid{
-        grid-template-columns:1fr;
-    }
 
-    header h1{
-        font-size:20px;
-    }
+  header{
+    padding:14px 15px;
+  }
+
+  .logo-area img{
+    width:45px;
+    height:45px;
+  }
+
+  .logo-text h1{
+    font-size:17px;
+  }
+
+  .contact-btn{
+    padding:9px 11px;
+    font-size:12px;
+  }
+
+  .hero{
+    padding:35px 15px 20px;
+  }
+
+  .hero h2{
+    font-size:27px;
+  }
+
+  .truck-card{
+    padding:17px;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-    <img src="./icon-512.png" class="logo" alt="Preserver Trans">
-    <h1>PRESERVER TRANS LLC</h1>
-    <p>Live Truck Availability</p>
-</header>
 
-<div class="container">
+  <div class="logo-area">
 
-    <input
-        id="search"
-        class="search"
-        type="text"
-        placeholder="🔎 Search truck, location, lane..."
-        oninput="searchTrucks()"
-    >
+    <img src="./icon-512.png" alt="Preserver Trans">
 
-    <div id="status" class="status">
-        Loading available trucks...
+    <div class="logo-text">
+      <h1>Preserver Trans LLC</h1>
+      <p>Truck Availability Board</p>
     </div>
 
-    <div id="grid" class="grid"></div>
+  </div>
+
+  <button class="contact-btn" onclick="openContact()">
+    Contact Dispatcher
+  </button>
+
+</header>
+
+
+<section class="hero">
+
+  <h2>Available Trucks</h2>
+
+  <p>
+    Find available trucks and contact our dispatcher directly.
+  </p>
+
+</section>
+
+
+<div class="search-box">
+
+  <input
+    type="text"
+    id="search"
+    placeholder="Search truck, driver, location, lane..."
+    oninput="filterTrucks()"
+  >
 
 </div>
 
+
+<main class="container">
+
+  <div id="status" class="status">
+    Loading available trucks...
+  </div>
+
+  <div id="truckList" class="trucks"></div>
+
+</main>
+
+
 <footer>
-    Preserver Trans LLC • California, USA • MC 016354
+
+  Preserver Trans LLC • California, USA • MC 016354
+
 </footer>
+
 
 <!-- CONTACT MODAL -->
 
-<div id="modal" class="modal">
+<div id="contactModal" class="modal">
 
-    <div class="modal-box">
+  <div class="modal-box">
 
-        <span class="close" onclick="closeModal()">×</span>
+    <span class="close" onclick="closeContact()">×</span>
 
-        <h2>📞 Contact Dispatcher</h2>
+    <h2>Dispatcher Contact</h2>
 
-        <div class="contact-info">
-            <b>Dispatcher:</b> Saim Ali
-        </div>
+    <div class="contact-info">
 
-        <div class="contact-info">
-            <b>Company:</b> Preserver Trans LLC
-        </div>
+      <p>
+        <strong>Dispatcher:</strong>
+        Saim Ali
+      </p>
 
-        <div class="contact-info">
-            <b>Phone:</b> 530-565-6348
-        </div>
+      <p>
+        <strong>Company:</strong>
+        Preserver Trans LLC
+      </p>
 
-        <div class="contact-info">
-            <b>Email:</b> preservertrans79@gmail.com
-        </div>
+      <p>
+        <strong>Phone:</strong>
+        530-565-6348
+      </p>
 
-        <div class="contact-info">
-            <b>Location:</b> California, USA
-        </div>
+      <p>
+        <strong>Email:</strong>
+        preservertrans79@gmail.com
+      </p>
 
-        <div class="contact-info">
-            <b>MC:</b> 016354
-        </div>
+      <p>
+        <strong>Location:</strong>
+        California, USA
+      </p>
 
-        <a class="action" href="tel:+15305656348">
-            📞 Call Dispatcher
-        </a>
-
-        <a class="action" href="mailto:preservertrans79@gmail.com">
-            ✉️ Email Dispatcher
-        </a>
+      <p>
+        <strong>MC:</strong>
+        016354
+      </p>
 
     </div>
+
+    <a
+      class="contact-link call"
+      href="tel:+15305656348"
+    >
+      📞 Call Dispatcher
+    </a>
+
+    <a
+      class="contact-link email"
+      href="mailto:preservertrans79@gmail.com"
+    >
+      ✉️ Email Dispatcher
+    </a>
+
+  </div>
+
 </div>
+
 
 <script>
 
@@ -312,181 +476,263 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_HFnwZD1cccBr6RsIDhZPbA_MxHGK0T6";
 
-let trucks=[];
+let allTrucks = [];
+
+
+/* LOAD TRUCKS */
 
 async function loadTrucks(){
 
-    try{
+  const status =
+  document.getElementById("status");
 
-        const response=await fetch(
-            SUPABASE_URL +
-            "/rest/v1/trucks?status=eq.Available&order=id.desc",
-            {
-                headers:{
-                    "apikey":SUPABASE_KEY,
-                    "Authorization":"Bearer "+SUPABASE_KEY
-                }
-            }
-        );
+  try{
 
-        if(!response.ok)
-            throw new Error("Load failed");
+    const response = await fetch(
+      SUPABASE_URL +
+      "/rest/v1/trucks?status=eq.Available&order=id.desc",
+      {
+        headers:{
+          "apikey":SUPABASE_KEY,
+          "Authorization":"Bearer "+SUPABASE_KEY
+        }
+      }
+    );
 
-        trucks=await response.json();
-
-        displayTrucks(trucks);
-
-    }catch(error){
-
-        document.getElementById("status").innerText=
-        "Unable to load trucks.";
-
-        console.error(error);
-    }
-}
-
-function displayTrucks(list){
-
-    const grid=document.getElementById("grid");
-    const status=document.getElementById("status");
-
-    grid.innerHTML="";
-
-    if(list.length===0){
-
-        status.innerText="No available trucks right now.";
-
-        grid.innerHTML=`
-            <div class="empty">
-                🚛<br><br>
-                No trucks available
-            </div>
-        `;
-
-        return;
+    if(!response.ok){
+      throw new Error("Database error");
     }
 
-    status.innerText=
-    list.length+" Available Truck"+
-    (list.length>1?"s":"");
+    allTrucks = await response.json();
 
-    list.forEach(truck=>{
+    displayTrucks(allTrucks);
 
-        const card=document.createElement("div");
-        card.className="card";
+  }catch(error){
 
-        card.innerHTML=`
+    console.error(error);
 
-        <div class="card-top">
-            <h2>🚛 #${safe(truck.truck_number)}</h2>
-            <span class="badge">AVAILABLE</span>
-        </div>
+    status.innerHTML =
+      "Unable to load trucks. Please try again.";
 
-        <div class="info">
-            <span class="label">Driver</span>
-            ${safe(truck.driver_name||"N/A")}
-        </div>
+  }
 
-        <div class="info">
-            <span class="label">Location</span>
-            ${safe(truck.location)}
-        </div>
-
-        <div class="info">
-            <span class="label">Date</span>
-            ${safe(truck.available_date)}
-        </div>
-
-        <div class="info">
-            <span class="label">Time</span>
-            ${safe(truck.available_time)}
-        </div>
-
-        <div class="info">
-            <span class="label">Lane</span>
-            ${safe(truck.lane||"N/A")}
-        </div>
-
-        <div class="info">
-            <span class="label">Equipment</span>
-            ${safe(truck.equipment||"N/A")}
-        </div>
-
-        <div class="info">
-            <span class="label">Notes</span>
-            ${safe(truck.notes||"N/A")}
-        </div>
-
-        <button class="contact" onclick="openModal()">
-            📞 CONTACT DISPATCHER
-        </button>
-        `;
-
-        grid.appendChild(card);
-    });
 }
 
-function searchTrucks(){
 
-    const q=document
-    .getElementById("search")
-    .value
+/* DISPLAY */
+
+function displayTrucks(trucks){
+
+  const list =
+  document.getElementById("truckList");
+
+  const status =
+  document.getElementById("status");
+
+  list.innerHTML = "";
+
+  if(!trucks.length){
+
+    status.style.display="none";
+
+    list.innerHTML = `
+      <div class="empty">
+        <h3>No Trucks Available</h3>
+        <p>Please check again later.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  status.style.display="none";
+
+
+  trucks.forEach(truck => {
+
+    const card =
+    document.createElement("div");
+
+    card.className="truck-card";
+
+    card.innerHTML = `
+
+      <div class="card-top">
+
+        <div class="truck-number">
+          Truck #${escapeHTML(truck.truck_number)}
+        </div>
+
+        <div class="available">
+          AVAILABLE
+        </div>
+
+      </div>
+
+
+      <div class="info">
+
+        <div class="info-row">
+          <span class="label">Driver</span>
+          <span class="value">
+            ${escapeHTML(truck.driver_name || "-")}
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Location</span>
+          <span class="value">
+            ${escapeHTML(truck.location || "-")}
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Available Date</span>
+          <span class="value">
+            ${escapeHTML(truck.available_date || "-")}
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Available Time</span>
+          <span class="value">
+            ${escapeHTML(truck.available_time || "-")}
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Lane</span>
+          <span class="value">
+            ${escapeHTML(truck.lane || "-")}
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Equipment</span>
+          <span class="value">
+            ${escapeHTML(truck.equipment || "-")}
+          </span>
+        </div>
+
+      </div>
+
+
+      ${
+        truck.notes
+        ?
+        `<div class="notes">
+          ${escapeHTML(truck.notes)}
+        </div>`
+        :
+        ""
+      }
+
+    `;
+
+    list.appendChild(card);
+
+  });
+
+}
+
+
+/* SEARCH */
+
+function filterTrucks(){
+
+  const search =
+  document.getElementById("search")
+  .value
+  .toLowerCase();
+
+  const filtered =
+  allTrucks.filter(truck => {
+
+    return [
+
+      truck.truck_number,
+      truck.driver_name,
+      truck.location,
+      truck.lane,
+      truck.equipment,
+      truck.notes
+
+    ]
+    .join(" ")
     .toLowerCase()
-    .trim();
+    .includes(search);
 
-    const result=trucks.filter(t=>{
+  });
 
-        const text=[
-            t.truck_number,
-            t.driver_name,
-            t.location,
-            t.lane,
-            t.equipment,
-            t.notes
-        ].join(" ").toLowerCase();
+  displayTrucks(filtered);
 
-        return text.includes(q);
-    });
-
-    displayTrucks(result);
 }
 
-function openModal(){
-    document.getElementById("modal").style.display="flex";
+
+/* CONTACT */
+
+function openContact(){
+
+  document.getElementById("contactModal")
+  .style.display="flex";
+
 }
 
-function closeModal(){
-    document.getElementById("modal").style.display="none";
+
+function closeContact(){
+
+  document.getElementById("contactModal")
+  .style.display="none";
+
 }
 
-window.onclick=function(e){
 
-    const modal=document.getElementById("modal");
+window.onclick=function(event){
 
-    if(e.target===modal)
-        closeModal();
-};
+  const modal =
+  document.getElementById("contactModal");
 
-function safe(value){
+  if(event.target===modal){
 
-    return String(value ?? "")
+    closeContact();
+
+  }
+
+}
+
+
+/* SECURITY */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
+
 }
+
+
+/* SERVICE WORKER */
 
 if("serviceWorker" in navigator){
 
-    window.addEventListener("load",()=>{
+  window.addEventListener("load",()=>{
 
-        navigator.serviceWorker
-        .register("./sw.js")
-        .catch(err=>console.log(err));
+    navigator.serviceWorker
+      .register("./sw.js")
+      .catch(error =>
+        console.log("SW error:",error)
+      );
 
-    });
+  });
+
 }
+
+
+/* START */
 
 loadTrucks();
 

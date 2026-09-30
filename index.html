@@ -1,605 +1,494 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<title>Preserver Trans LLC</title>
 
-  <title>Preserver Trans LLC</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" href="./icon-512.png">
+<link rel="apple-touch-icon" href="./icon-512.png">
 
-  <!-- PWA -->
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#111111">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#d4af37">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#080808;
+    color:white;
+    min-height:100vh;
+}
+
+header{
+    background:linear-gradient(145deg,#111,#1c1c1c);
+    border-bottom:1px solid #d4af37;
+    padding:22px 16px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.logo{
+    width:65px;
+    height:65px;
+    border-radius:18px;
+    object-fit:cover;
+    border:2px solid #d4af37;
+    margin-bottom:8px;
+}
+
+header h1{
+    color:#d4af37;
+    font-size:22px;
+    letter-spacing:.5px;
+}
+
+header p{
+    color:#aaa;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.container{
+    width:94%;
+    max-width:1050px;
+    margin:20px auto 80px;
+}
+
+.search{
+    width:100%;
+    background:#171717;
+    border:1px solid #333;
+    color:white;
+    padding:15px 16px;
+    border-radius:14px;
+    outline:none;
+    font-size:15px;
+    margin-bottom:18px;
+}
+
+.search:focus{
+    border-color:#d4af37;
+}
+
+.status{
+    text-align:center;
+    color:#aaa;
+    font-size:13px;
+    margin:12px 0 18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+    gap:16px;
+}
+
+.card{
+    background:linear-gradient(145deg,#171717,#101010);
+    border:1px solid #333;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
+}
+
+.card:hover{
+    border-color:#d4af37;
+}
+
+.card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:17px;
+}
+
+.card-top h2{
+    color:#d4af37;
+    font-size:20px;
+}
+
+.badge{
+    background:#16803c;
+    padding:6px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.info{
+    padding:8px 0;
+    border-bottom:1px solid #252525;
+    font-size:14px;
+}
+
+.label{
+    color:#888;
+    display:inline-block;
+    min-width:115px;
+}
+
+.contact{
+    width:100%;
+    margin-top:16px;
+    border:0;
+    padding:14px;
+    border-radius:12px;
+    background:#d4af37;
+    color:#080808;
+    font-weight:bold;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.contact:hover{
+    background:#f0cf55;
+}
+
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    color:#888;
+}
+
+footer{
+    text-align:center;
+    color:#666;
+    font-size:11px;
+    padding:25px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.82);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-box{
+    width:100%;
+    max-width:410px;
+    background:#171717;
+    border:1px solid #d4af37;
+    border-radius:20px;
+    padding:25px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:17px;
+    top:10px;
+    color:#aaa;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.modal-box h2{
+    text-align:center;
+    color:#d4af37;
+    margin-bottom:20px;
+}
+
+.contact-info{
+    color:#ddd;
+    padding:8px 0;
+}
+
+.action{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    padding:13px;
+    margin-top:10px;
+    border-radius:11px;
+    background:#d4af37;
+    color:#111;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+    .grid{
+        grid-template-columns:1fr;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-      min-height: 100vh;
+    header h1{
+        font-size:20px;
     }
-
-    header {
-      background: linear-gradient(135deg, #111, #222);
-      padding: 22px 15px;
-      text-align: center;
-      border-bottom: 2px solid #d4af37;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    header h1 {
-      color: #d4af37;
-      font-size: 25px;
-      margin-bottom: 6px;
-    }
-
-    header p {
-      color: #ccc;
-      font-size: 13px;
-    }
-
-    .container {
-      width: 94%;
-      max-width: 1100px;
-      margin: 20px auto;
-    }
-
-    .search-box {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .search-box input {
-      flex: 1;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid #555;
-      background: #222;
-      color: white;
-      outline: none;
-      font-size: 15px;
-    }
-
-    .search-box input:focus {
-      border-color: #d4af37;
-    }
-
-    .status {
-      text-align: center;
-      color: #aaa;
-      margin: 15px 0;
-      font-size: 14px;
-    }
-
-    .truck-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .truck-card {
-      background: #1d1d1d;
-      border: 1px solid #444;
-      border-radius: 15px;
-      padding: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    }
-
-    .truck-card:hover {
-      border-color: #d4af37;
-    }
-
-    .truck-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .truck-title h2 {
-      color: #d4af37;
-      font-size: 21px;
-    }
-
-    .available {
-      background: #16803c;
-      color: white;
-      padding: 5px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-    }
-
-    .info {
-      margin: 9px 0;
-      color: #ddd;
-      font-size: 14px;
-    }
-
-    .label {
-      color: #999;
-    }
-
-    .contact-btn {
-      width: 100%;
-      margin-top: 15px;
-      padding: 13px;
-      border: none;
-      border-radius: 10px;
-      background: #d4af37;
-      color: #111;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .contact-btn:hover {
-      background: #f0cf55;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 50px 20px;
-      color: #aaa;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 15px;
-      color: #777;
-      font-size: 12px;
-    }
-
-    /* Modal */
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-box {
-      width: 100%;
-      max-width: 420px;
-      background: #1d1d1d;
-      border: 1px solid #d4af37;
-      border-radius: 18px;
-      padding: 25px;
-      position: relative;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    }
-
-    .modal-box h2 {
-      color: #d4af37;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .close {
-      position: absolute;
-      right: 15px;
-      top: 10px;
-      color: #aaa;
-      font-size: 27px;
-      cursor: pointer;
-    }
-
-    .contact-info {
-      margin: 12px 0;
-      color: #ddd;
-    }
-
-    .contact-link {
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      padding: 13px;
-      border-radius: 10px;
-      margin-top: 10px;
-      background: #d4af37;
-      color: #111;
-      font-weight: bold;
-    }
-
-    .contact-link:hover {
-      background: #f0cf55;
-    }
-
-    @media (max-width: 500px) {
-      header h1 {
-        font-size: 21px;
-      }
-
-      .truck-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .container {
-        width: 92%;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>🚛 Preserver Trans LLC</h1>
-  <p>Live Truck Availability Board</p>
+    <img src="./icon-512.png" class="logo" alt="Preserver Trans">
+    <h1>PRESERVER TRANS LLC</h1>
+    <p>Live Truck Availability</p>
 </header>
 
 <div class="container">
 
-  <div class="search-box">
     <input
-      type="text"
-      id="searchInput"
-      placeholder="Search truck, location, lane..."
-      oninput="filterTrucks()"
+        id="search"
+        class="search"
+        type="text"
+        placeholder="🔎 Search truck, location, lane..."
+        oninput="searchTrucks()"
     >
-  </div>
 
-  <div class="status" id="status">
-    Loading available trucks...
-  </div>
+    <div id="status" class="status">
+        Loading available trucks...
+    </div>
 
-  <div class="truck-grid" id="truckGrid"></div>
+    <div id="grid" class="grid"></div>
 
 </div>
 
 <footer>
-  Preserver Trans LLC • California, USA
+    Preserver Trans LLC • California, USA • MC 016354
 </footer>
-
 
 <!-- CONTACT MODAL -->
 
-<div class="modal" id="contactModal">
+<div id="modal" class="modal">
 
-  <div class="modal-box">
+    <div class="modal-box">
 
-    <span class="close" onclick="closeModal()">×</span>
+        <span class="close" onclick="closeModal()">×</span>
 
-    <h2>📞 Contact Dispatcher</h2>
+        <h2>📞 Contact Dispatcher</h2>
 
-    <div class="contact-info">
-      <strong>Dispatcher:</strong> Saim Ali
+        <div class="contact-info">
+            <b>Dispatcher:</b> Saim Ali
+        </div>
+
+        <div class="contact-info">
+            <b>Company:</b> Preserver Trans LLC
+        </div>
+
+        <div class="contact-info">
+            <b>Phone:</b> 530-565-6348
+        </div>
+
+        <div class="contact-info">
+            <b>Email:</b> preservertrans79@gmail.com
+        </div>
+
+        <div class="contact-info">
+            <b>Location:</b> California, USA
+        </div>
+
+        <div class="contact-info">
+            <b>MC:</b> 016354
+        </div>
+
+        <a class="action" href="tel:+15305656348">
+            📞 Call Dispatcher
+        </a>
+
+        <a class="action" href="mailto:preservertrans79@gmail.com">
+            ✉️ Email Dispatcher
+        </a>
+
     </div>
-
-    <div class="contact-info">
-      <strong>Company:</strong> Preserver Trans LLC
-    </div>
-
-    <div class="contact-info">
-      <strong>Phone:</strong> 530-565-6348
-    </div>
-
-    <div class="contact-info">
-      <strong>Email:</strong> preservertrans79@gmail.com
-    </div>
-
-    <div class="contact-info">
-      <strong>Location:</strong> California, USA
-    </div>
-
-    <div class="contact-info">
-      <strong>MC:</strong> 016354
-    </div>
-
-    <a
-      class="contact-link"
-      href="tel:+15305656348">
-      📞 Call Dispatcher
-    </a>
-
-    <a
-      class="contact-link"
-      href="mailto:preservertrans79@gmail.com">
-      ✉️ Email Dispatcher
-    </a>
-
-  </div>
-
 </div>
-
 
 <script>
 
-  /* =========================
-     SUPABASE
-  ========================= */
+const SUPABASE_URL =
+"https://lriojwlaxemghavidsjt.supabase.co";
 
-  const SUPABASE_URL =
-    "https://lriojwlaxemghavidsjt.supabase.co";
+const SUPABASE_KEY =
+"sb_publishable_HFnwZD1cccBr6RsIDhZPbA_MxHGK0T6";
 
-  const SUPABASE_KEY =
-    "sb_publishable_HFnwZD1cccBr6RsIDhZPbA_MxHGK0T6";
+let trucks=[];
 
+async function loadTrucks(){
 
-  let trucks = [];
+    try{
 
+        const response=await fetch(
+            SUPABASE_URL +
+            "/rest/v1/trucks?status=eq.Available&order=id.desc",
+            {
+                headers:{
+                    "apikey":SUPABASE_KEY,
+                    "Authorization":"Bearer "+SUPABASE_KEY
+                }
+            }
+        );
 
-  /* =========================
-     LOAD TRUCKS
-  ========================= */
+        if(!response.ok)
+            throw new Error("Load failed");
 
-  async function loadTrucks() {
+        trucks=await response.json();
 
-    const status = document.getElementById("status");
-    const grid = document.getElementById("truckGrid");
+        displayTrucks(trucks);
 
-    status.innerText = "Loading available trucks...";
+    }catch(error){
 
-    try {
+        document.getElementById("status").innerText=
+        "Unable to load trucks.";
 
-      const response = await fetch(
-        SUPABASE_URL +
-        "/rest/v1/trucks?status=eq.Available&order=id.desc",
-        {
-          method: "GET",
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization": "Bearer " + SUPABASE_KEY
-          }
-        }
-      );
+        console.error(error);
+    }
+}
 
-      if (!response.ok) {
-        throw new Error("Could not load trucks");
-      }
+function displayTrucks(list){
 
-      trucks = await response.json();
+    const grid=document.getElementById("grid");
+    const status=document.getElementById("status");
 
-      displayTrucks(trucks);
+    grid.innerHTML="";
 
-    } catch (error) {
+    if(list.length===0){
 
-      console.error(error);
+        status.innerText="No available trucks right now.";
 
-      status.innerText =
-        "Unable to load trucks. Please try again.";
+        grid.innerHTML=`
+            <div class="empty">
+                🚛<br><br>
+                No trucks available
+            </div>
+        `;
 
-      grid.innerHTML = "";
-
+        return;
     }
 
-  }
+    status.innerText=
+    list.length+" Available Truck"+
+    (list.length>1?"s":"");
 
+    list.forEach(truck=>{
 
-  /* =========================
-     DISPLAY TRUCKS
-  ========================= */
+        const card=document.createElement("div");
+        card.className="card";
 
-  function displayTrucks(list) {
+        card.innerHTML=`
 
-    const grid = document.getElementById("truckGrid");
-    const status = document.getElementById("status");
-
-    grid.innerHTML = "";
-
-    if (list.length === 0) {
-
-      status.innerText = "No available trucks right now.";
-
-      grid.innerHTML = `
-        <div class="empty">
-          🚛 No trucks available
-        </div>
-      `;
-
-      return;
-    }
-
-    status.innerText =
-      list.length + " available truck" +
-      (list.length > 1 ? "s" : "");
-
-    list.forEach(truck => {
-
-      const card = document.createElement("div");
-
-      card.className = "truck-card";
-
-      card.innerHTML = `
-
-        <div class="truck-title">
-
-          <h2>
-            🚛 Truck ${escapeHtml(truck.truck_number)}
-          </h2>
-
-          <span class="available">
-            AVAILABLE
-          </span>
-
+        <div class="card-top">
+            <h2>🚛 #${safe(truck.truck_number)}</h2>
+            <span class="badge">AVAILABLE</span>
         </div>
 
         <div class="info">
-          <span class="label">Driver:</span>
-          ${escapeHtml(truck.driver_name || "N/A")}
+            <span class="label">Driver</span>
+            ${safe(truck.driver_name||"N/A")}
         </div>
 
         <div class="info">
-          <span class="label">Location:</span>
-          ${escapeHtml(truck.location || "N/A")}
+            <span class="label">Location</span>
+            ${safe(truck.location)}
         </div>
 
         <div class="info">
-          <span class="label">Available Date:</span>
-          ${escapeHtml(truck.available_date || "N/A")}
+            <span class="label">Date</span>
+            ${safe(truck.available_date)}
         </div>
 
         <div class="info">
-          <span class="label">Available Time:</span>
-          ${escapeHtml(truck.available_time || "N/A")}
+            <span class="label">Time</span>
+            ${safe(truck.available_time)}
         </div>
 
         <div class="info">
-          <span class="label">Lane:</span>
-          ${escapeHtml(truck.lane || "N/A")}
+            <span class="label">Lane</span>
+            ${safe(truck.lane||"N/A")}
         </div>
 
         <div class="info">
-          <span class="label">Equipment:</span>
-          ${escapeHtml(truck.equipment || "N/A")}
+            <span class="label">Equipment</span>
+            ${safe(truck.equipment||"N/A")}
         </div>
 
         <div class="info">
-          <span class="label">Notes:</span>
-          ${escapeHtml(truck.notes || "N/A")}
+            <span class="label">Notes</span>
+            ${safe(truck.notes||"N/A")}
         </div>
 
-        <button
-          class="contact-btn"
-          onclick="openModal()">
-          📞 Contact Dispatcher
+        <button class="contact" onclick="openModal()">
+            📞 CONTACT DISPATCHER
         </button>
+        `;
 
-      `;
+        grid.appendChild(card);
+    });
+}
 
-      grid.appendChild(card);
+function searchTrucks(){
 
+    const q=document
+    .getElementById("search")
+    .value
+    .toLowerCase()
+    .trim();
+
+    const result=trucks.filter(t=>{
+
+        const text=[
+            t.truck_number,
+            t.driver_name,
+            t.location,
+            t.lane,
+            t.equipment,
+            t.notes
+        ].join(" ").toLowerCase();
+
+        return text.includes(q);
     });
 
-  }
+    displayTrucks(result);
+}
 
+function openModal(){
+    document.getElementById("modal").style.display="flex";
+}
 
-  /* =========================
-     SEARCH
-  ========================= */
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
 
-  function filterTrucks() {
+window.onclick=function(e){
 
-    const search =
-      document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase()
-        .trim();
+    const modal=document.getElementById("modal");
 
-    const filtered = trucks.filter(truck => {
+    if(e.target===modal)
+        closeModal();
+};
 
-      const text = [
+function safe(value){
 
-        truck.truck_number,
-        truck.driver_name,
-        truck.location,
-        truck.lane,
-        truck.equipment,
-        truck.notes
+    return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 
-      ]
-      .join(" ")
-      .toLowerCase();
+if("serviceWorker" in navigator){
 
-      return text.includes(search);
+    window.addEventListener("load",()=>{
 
-    });
-
-    displayTrucks(filtered);
-
-  }
-
-
-  /* =========================
-     MODAL
-  ========================= */
-
-  function openModal() {
-
-    document.getElementById("contactModal").style.display =
-      "flex";
-
-  }
-
-
-  function closeModal() {
-
-    document.getElementById("contactModal").style.display =
-      "none";
-
-  }
-
-
-  window.onclick = function(event) {
-
-    const modal =
-      document.getElementById("contactModal");
-
-    if (event.target === modal) {
-      closeModal();
-    }
-
-  };
-
-
-  /* =========================
-     SECURITY
-  ========================= */
-
-  function escapeHtml(value) {
-
-    if (value === null || value === undefined) {
-      return "";
-    }
-
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-
-  }
-
-
-  /* =========================
-     PWA SERVICE WORKER
-  ========================= */
-
-  if ("serviceWorker" in navigator) {
-
-    window.addEventListener("load", () => {
-
-      navigator.serviceWorker
+        navigator.serviceWorker
         .register("./sw.js")
-        .then(() => {
-          console.log("Preserver Trans App Ready");
-        })
-        .catch(error => {
-          console.log(
-            "Service Worker Error:",
-            error
-          );
-        });
+        .catch(err=>console.log(err));
 
     });
+}
 
-  }
-
-
-  /* =========================
-     START
-  ========================= */
-
-  loadTrucks();
+loadTrucks();
 
 </script>
 

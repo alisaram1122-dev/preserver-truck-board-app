@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Preserver Trans - Dispatcher</title>
+
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" href="./icon-512.png">
+<link rel="apple-touch-icon" href="./icon-512.png">
+
+<meta name="theme-color" content="#d4af37">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#080808;
+color:white;
+min-height:100vh;
+}
+
+header{
+background:#111;
+border-bottom:1px solid #d4af37;
+padding:18px;
+text-align:center;
+}
+
+.logo{
+width:58px;
+height:58px;
+border-radius:15px;
+border:2px solid #d4af37;
+object-fit:cover;
+}
+
+header h1{
+color:#d4af37;
+font-size:20px;
+margin-top:7px;
+}
+
+header p{
+color:#888;
+font-size:12px;
+margin-top:4px;
+}
+
+.container{
+width:94%;
+max-width:900px;
+margin:20px auto 60px;
+}
+
+/* LOGIN */
+
+#loginScreen{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:radial-gradient(circle at center,#1d1d1d,#080808);
+}
+
+.login-box{
+width:100%;
+max-width:400px;
+background:#151515;
+border:1px solid #d4af37;
+border-radius:22px;
+padding:30px 24px;
+box-shadow:0 15px 50px rgba(0,0,0,.6);
+text-align:center;
+}
+
+.login-logo{
+width:85px;
+height:85px;
+border-radius:22px;
+border:2px solid #d4af37;
+object-fit:cover;
+margin-bottom:15px;
+}
+
+.login-box h1{
+color:#d4af37;
+font-size:22px;
+}
+
+.login-box p{
+color:#888;
+margin:7px 0 25px;
+font-size:13px;
+}
+
+input,select,textarea{
+width:100%;
+background:#202020;
+border:1px solid #3b3b3b;
+border-radius:11px;
+padding:13px;
+color:white;
+outline:none;
+font-size:14px;
+margin-top:8px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+border-color:#d4af37;
+}
+
+.field{
+text-align:left;
+margin-bottom:13px;
+}
+
+.field label{
+font-size:12px;
+color:#aaa;
+}
+
+button{
+border:0;
+cursor:pointer;
+border-radius:11px;
+padding:13px;
+font-weight:bold;
+}
+
+.gold{
+width:100%;
+background:#d4af37;
+color:#111;
+}
+
+.gold:hover{
+background:#f0cf55;
+}
+
+.error{
+color:#ff7070;
+font-size:13px;
+margin:12px 0;
+}
+
+/* DASHBOARD */
+
+#dashboard{
+display:none;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+margin-bottom:20px;
+}
+
+.topbar h2{
+color:#d4af37;
+font-size:20px;
+}
+
+.logout{
+background:#292929;
+color:#ddd;
+padding:10px 14px;
+}
+
+.form-box{
+background:#151515;
+border:1px solid #333;
+border-radius:18px;
+padding:20px;
+margin-bottom:22px;
+}
+
+.form-box h3{
+color:#d4af37;
+margin-bottom:15px;
+}
+
+.two{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.form-buttons{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.form-buttons button{
+flex:1;
+}
+
+.cancel{
+background:#333;
+color:white;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:15px;
+}
+
+.truck{
+background:#151515;
+border:1px solid #333;
+border-radius:17px;
+padding:17px;
+}
+
+.truck:hover{
+border-color:#d4af37;
+}
+
+.truck-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:13px;
+}
+
+.truck-head h3{
+color:#d4af37;
+}
+
+.status{
+font-size:10px;
+padding:5px 8px;
+border-radius:15px;
+background:#16803c;
+}
+
+.truck-info{
+color:#ccc;
+font-size:13px;
+padding:6px 0;
+border-bottom:1px solid #252525;
+}
+
+.actions{
+display:flex;
+gap:8px;
+margin-top:14px;
+}
+
+.edit{
+flex:1;
+background:#d4af37;
+color:#111;
+}
+
+.delete{
+flex:1;
+background:#512020;
+color:#ffaaaa;
+}
+
+.message{
+text-align:center;
+color:#aaa;
+font-size:13px;
+margin:10px;
+}
+
+@media(max-width:600px){
+
+.two{
+grid-template-columns:1fr;
+}
+
+.topbar{
+align-items:flex-start;
+}
+
+.topbar h2{
+font-size:17px;
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<section id="loginScreen">
+
+<div class="login-box">
+
+<img src="./icon-512.png"
+class="login-logo">
+
+<h1>PRESERVER TRANS LLC</h1>
+
+<p>Dispatcher Secure Login</p>
+
+<div class="field">
+<label>Email</label>
+<input
+id="email"
+type="email"
+placeholder="Dispatcher email">
+</div>
+
+<div class="field">
+<label>Password</label>
+<input
+id="password"
+type="password"
+placeholder="Password">
+</div>
+
+<div id="loginError"
+class="error"></div>
+
+<button
+class="gold"
+onclick="login()">
+🔐 LOGIN
+</button>
+
+</div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard">
+
+<header>
+
+<img
+src="./icon-512.png"
+class="logo">
+
+<h1>PRESERVER TRANS LLC</h1>
+
+<p>Secure Dispatcher Dashboard</p>
+
+</header>
+
+<div class="container">
+
+<div class="topbar">
+
+<h2>🚛 Truck Management</h2>
+
+<button
+class="logout"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+
+<!-- ADD / EDIT FORM -->
+
+<div class="form-box">
+
+<h3 id="formTitle">
+➕ Add New Truck
+</h3>
+
+<div class="two">
+
+<div class="field">
+<label>Truck Number *</label>
+<input id="truck_number"
+placeholder="7867">
+</div>
+
+<div class="field">
+<label>Driver Name</label>
+<input id="driver_name"
+placeholder="Driver name">
+</div>
+
+</div>
+
+<div class="two">
+
+<div class="field">
+<label>Location *</label>
+<input id="location"
+placeholder="Kent, WA">
+</div>
+
+<div class="field">
+<label>Lane</label>
+<input id="lane"
+placeholder="WA → CA">
+</div>
+
+</div>
+
+<div class="two">
+
+<div class="field">
+<label>Available Date *</label>
+<input id="available_date"
+type="date">
+</div>
+
+<div class="field">
+<label>Available Time *</label>
+<input id="available_time"
+type="time">
+</div>
+
+</div>
+
+<div class="two">
+
+<div class="field">
+<label>Equipment</label>
+
+<select id="equipment">
+
+<option value="">Select equipment</option>
+<option>53' Dry Van</option>
+<option>Reefer</option>
+<option>Flatbed</option>
+<option>Step Deck</option>
+<option>Power Only</option>
+
+</select>
+
+</div>
+
+<div class="field">
+<label>Status</label>
+
+<select id="status">
+
+<option>Available</option>
+<option>Booked</option>
+<option>Not Available</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="field">
+
+<label>Notes</label>
+
+<textarea
+id="notes"
+rows="3"
+placeholder="Additional information"></textarea>
+
+</div>
+
+<div class="form-buttons">
+
+<button
+class="gold"
+onclick="saveTruck()">
+💾 SAVE TRUCK
+</button>
+
+<button
+class="cancel"
+onclick="resetForm()">
+CLEAR
+</button>
+
+</div>
+
+<div id="message"
+class="message"></div>
+
+</div>
+
+
+<h2
+style="color:#d4af37;margin-bottom:14px;">
+All Trucks
+</h2>
+
+<div id="truckList"
+class="cards"></div>
+
+</div>
+
+</section>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://lriojwlaxemghavidsjt.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_HFnwZD1cccBr6RsIDhZPbA_MxHGK0T6";
+
+const supabaseClient =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+let editingId=null;
+
+
+/* LOGIN */
+
+async function login(){
+
+const email=
+document.getElementById("email").value.trim();
+
+const password=
+document.getElementById("password").value;
+
+const error=
+document.getElementById("loginError");
+
+error.innerText="";
+
+if(!email || !password){
+
+error.innerText=
+"Please enter email and password.";
+
+return;
+}
+
+const {error:loginError}=
+await supabaseClient.auth.signInWithPassword({
+email:email,
+password:password
+});
+
+if(loginError){
+
+error.innerText=
+"Login failed. Check your email and password.";
+
+return;
+}
+
+showDashboard();
+
+}
+
+
+/* SESSION */
+
+async function checkSession(){
+
+const {data}=
+await supabaseClient.auth.getSession();
+
+if(data.session){
+
+showDashboard();
+
+}else{
+
+document.getElementById("loginScreen")
+.style.display="flex";
+
+document.getElementById("dashboard")
+.style.display="none";
+
+}
+
+}
+
+
+/* SHOW DASHBOARD */
+
+function showDashboard(){
+
+document.getElementById("loginScreen")
+.style.display="none";
+
+document.getElementById("dashboard")
+.style.display="block";
+
+loadTrucks();
+
+}
+
+
+/* LOGOUT */
+
+async function logout(){
+
+await supabaseClient.auth.signOut();
+
+location.reload();
+
+}
+
+
+/* LOAD TRUCKS */
+
+async function loadTrucks(){
+
+const list=
+document.getElementById("truckList");
+
+list.innerHTML=
+"<div class='message'>Loading trucks...</div>";
+
+const {data,error}=
+await supabaseClient
+.from("trucks")
+.select("*")
+.order("id",{ascending:false});
+
+if(error){
+
+list.innerHTML=
+"<div class='message'>Unable to load trucks.</div>";
+
+console.error(error);
+
+return;
+}
+
+list.innerHTML="";
+
+if(!data || data.length===0){
+
+list.innerHTML=
+"<div class='message'>No trucks added yet.</div>";
+
+return;
+}
+
+data.forEach(truck=>{
+
+const card=
+document.createElement("div");
+
+card.className="truck";
+
+card.innerHTML=`
+
+<div class="truck-head">
+
+<h3>🚛 #${safe(truck.truck_number)}</h3>
+
+<span class="status">
+${safe(truck.status)}
+</span>
+
+</div>
+
+<div class="truck-info">
+Driver: ${safe(truck.driver_name||"N/A")}
+</div>
+
+<div class="truck-info">
+Location: ${safe(truck.location)}
+</div>
+
+<div class="truck-info">
+Date: ${safe(truck.available_date)}
+</div>
+
+<div class="truck-info">
+Time: ${safe(truck.available_time)}
+</div>
+
+<div class="truck-info">
+Lane: ${safe(truck.lane||"N/A")}
+</div>
+
+<div class="truck-info">
+Equipment: ${safe(truck.equipment||"N/A")}
+</div>
+
+<div class="truck-info">
+Notes: ${safe(truck.notes||"N/A")}
+</div>
+
+<div class="actions">
+
+<button
+class="edit"
+onclick='editTruck(${JSON.stringify(truck)})'>
+✏️ EDIT
+</button>
+
+<button
+class="delete"
+onclick="deleteTruck(${truck.id})">
+🗑️ DELETE
+</button>
+
+</div>
+`;
+
+list.appendChild(card);
+
+});
+
+}
+
+
+/* SAVE */
+
+async function saveTruck(){
+
+const truck={
+
+truck_number:
+document.getElementById("truck_number").value.trim(),
+
+driver_name:
+document.getElementById("driver_name").value.trim(),
+
+location:
+document.getElementById("location").value.trim(),
+
+available_date:
+document.getElementById("available_date").value,
+
+available_time:
+document.getElementById("available_time").value,
+
+lane:
+document.getElementById("lane").value.trim(),
+
+equipment:
+document.getElementById("equipment").value,
+
+status:
+document.getElementById("status").value,
+
+notes:
+document.getElementById("notes").value.trim()
+
+};
+
+const message=
+document.getElementById("message");
+
+if(!truck.truck_number ||
+!truck.location ||
+!truck.available_date ||
+!truck.available_time){
+
+message.innerText=
+"Please fill all required fields.";
+
+return;
+}
+
+message.innerText="Saving...";
+
+let result;
+
+if(editingId){
+
+result=await supabaseClient
+.from("trucks")
+.update(truck)
+.eq("id",editingId);
+
+}else{
+
+result=await supabaseClient
+.from("trucks")
+.insert(truck);
+
+}
+
+if(result.error){
+
+message.innerText=
+"Error: "+result.error.message;
+
+return;
+}
+
+message.innerText=
+editingId
+?"Truck updated successfully."
+:"Truck added successfully.";
+
+resetForm();
+
+loadTrucks();
+
+}
+
+
+/* EDIT */
+
+function editTruck(truck){
+
+editingId=truck.id;
+
+document.getElementById("formTitle")
+.innerText="✏️ Edit Truck";
+
+document.getElementById("truck_number")
+.value=truck.truck_number||"";
+
+document.getElementById("driver_name")
+.value=truck.driver_name||"";
+
+document.getElementById("location")
+.value=truck.location||"";
+
+document.getElementById("available_date")
+.value=truck.available_date||"";
+
+document.getElementById("available_time")
+.value=truck.available_time||"";
+
+document.getElementById("lane")
+.value=truck.lane||"";
+
+document.getElementById("equipment")
+.value=truck.equipment||"";
+
+document.getElementById("status")
+.value=truck.status||"Available";
+
+document.getElementById("notes")
+.value=truck.notes||"";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* DELETE */
+
+async function deleteTruck(id){
+
+if(!confirm(
+"Are you sure you want to delete this truck?"
+)) return;
+
+const {error}=
+await supabaseClient
+.from("trucks")
+.delete()
+.eq("id",id);
+
+if(error){
+
+alert("Delete failed: "+error.message);
+
+return;
+}
+
+loadTrucks();
+
+}
+
+
+/* RESET */
+
+function resetForm(){
+
+editingId=null;
+
+document.getElementById("formTitle")
+.innerText="➕ Add New Truck";
+
+document.getElementById("truck_number").value="";
+document.getElementById("driver_name").value="";
+document.getElementById("location").value="";
+document.getElementById("available_date").value="";
+document.getElementById("available_time").value="";
+document.getElementById("lane").value="";
+document.getElementById("equipment").value="";
+document.getElementById("status").value="Available";
+document.getElementById("notes").value="";
+document.getElementById("message").innerText="";
+
+}
+
+
+/* ESCAPE */
+
+function safe(value){
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* SERVICE WORKER */
+
+if("serviceWorker" in navigator){
+
+window.addEventListener("load",()=>{
+
+navigator.serviceWorker
+.register("./sw.js")
+.catch(error=>console.log(error));
+
+});
+
+}
+
+
+/* START */
+
+checkSession();
+
+</script>
+
+</body>
+</html>

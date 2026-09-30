@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
-
-<title>Preserver Trans - Dispatcher</title>
+<title>Dispatcher Panel - Preserver Trans LLC</title>
 
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" type="image/png" href="./icon-512.png">
@@ -20,499 +17,577 @@ content="width=device-width,initial-scale=1.0">
 <style>
 
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-font-family:Arial,sans-serif;
-background:#080808;
-color:white;
-min-height:100vh;
-}
-
-header{
-background:#111;
-border-bottom:1px solid #d4af37;
-padding:18px;
-text-align:center;
-}
-
-.logo{
-width:58px;
-height:58px;
-border-radius:15px;
-border:2px solid #d4af37;
-object-fit:cover;
-}
-
-header h1{
-color:#d4af37;
-font-size:20px;
-margin-top:7px;
-}
-
-header p{
-color:#888;
-font-size:12px;
-margin-top:4px;
-}
-
-.container{
-width:94%;
-max-width:900px;
-margin:20px auto 60px;
+  background:#080808;
+  color:white;
+  min-height:100vh;
 }
 
 /* LOGIN */
 
-#loginScreen{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-background:radial-gradient(circle at center,#1d1d1d,#080808);
+#loginPage{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at top,#24200d 0,#080808 45%);
 }
 
 .login-box{
-width:100%;
-max-width:400px;
-background:#151515;
-border:1px solid #d4af37;
-border-radius:22px;
-padding:30px 24px;
-box-shadow:0 15px 50px rgba(0,0,0,.6);
-text-align:center;
+  width:100%;
+  max-width:400px;
+  background:#121212;
+  border:1px solid #d4af37;
+  border-radius:20px;
+  padding:35px 25px;
+  box-shadow:0 20px 60px rgba(0,0,0,.7);
+  text-align:center;
 }
 
 .login-logo{
-width:85px;
-height:85px;
-border-radius:22px;
-border:2px solid #d4af37;
-object-fit:cover;
-margin-bottom:15px;
+  width:85px;
+  height:85px;
+  border-radius:18px;
+  margin-bottom:15px;
 }
 
 .login-box h1{
-color:#d4af37;
-font-size:22px;
+  color:#d4af37;
+  font-size:25px;
 }
 
 .login-box p{
-color:#888;
-margin:7px 0 25px;
-font-size:13px;
+  color:#888;
+  margin:7px 0 25px;
+  font-size:13px;
 }
 
-input,select,textarea{
-width:100%;
-background:#202020;
-border:1px solid #3b3b3b;
-border-radius:11px;
-padding:13px;
-color:white;
-outline:none;
-font-size:14px;
-margin-top:8px;
+.input{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  background:#080808;
+  border:1px solid #333;
+  border-radius:9px;
+  color:white;
+  outline:none;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
-border-color:#d4af37;
+.input:focus{
+  border-color:#d4af37;
 }
 
-.field{
-text-align:left;
-margin-bottom:13px;
+.gold-btn{
+  width:100%;
+  padding:14px;
+  background:#d4af37;
+  color:#000;
+  border:0;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.field label{
-font-size:12px;
-color:#aaa;
-}
-
-button{
-border:0;
-cursor:pointer;
-border-radius:11px;
-padding:13px;
-font-weight:bold;
-}
-
-.gold{
-width:100%;
-background:#d4af37;
-color:#111;
-}
-
-.gold:hover{
-background:#f0cf55;
+.gold-btn:hover{
+  background:#f0c94d;
 }
 
 .error{
-color:#ff7070;
-font-size:13px;
-margin:12px 0;
+  color:#ff6969;
+  margin-top:12px;
+  font-size:13px;
 }
 
 /* DASHBOARD */
 
 #dashboard{
-display:none;
+  display:none;
 }
 
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-margin-bottom:20px;
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#111;
+  border-bottom:1px solid #d4af37;
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.topbar h2{
-color:#d4af37;
-font-size:20px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand img{
+  width:48px;
+  height:48px;
+  border-radius:10px;
+}
+
+.brand h1{
+  color:#d4af37;
+  font-size:20px;
+}
+
+.brand p{
+  color:#777;
+  font-size:11px;
+  margin-top:3px;
 }
 
 .logout{
-background:#292929;
-color:#ddd;
-padding:10px 14px;
+  background:#191919;
+  color:#d4af37;
+  border:1px solid #d4af37;
+  padding:9px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
+.container{
+  max-width:1150px;
+  margin:auto;
+  padding:25px 20px 60px;
+}
+
+.title{
+  margin-bottom:20px;
+}
+
+.title h2{
+  color:#d4af37;
+  font-size:27px;
+}
+
+.title p{
+  color:#777;
+  margin-top:5px;
+}
+
+/* FORM */
+
 .form-box{
-background:#151515;
-border:1px solid #333;
-border-radius:18px;
-padding:20px;
-margin-bottom:22px;
+  background:#121212;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:25px;
 }
 
 .form-box h3{
-color:#d4af37;
-margin-bottom:15px;
+  color:#d4af37;
+  margin-bottom:18px;
 }
 
-.two{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
 
-.form-buttons{
-display:flex;
-gap:10px;
-margin-top:15px;
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+  width:100%;
+  padding:13px;
+  background:#080808;
+  border:1px solid #333;
+  border-radius:8px;
+  color:white;
+  outline:none;
 }
 
-.form-buttons button{
-flex:1;
+.form-grid input:focus,
+.form-grid select:focus,
+.form-grid textarea:focus{
+  border-color:#d4af37;
 }
 
-.cancel{
-background:#333;
-color:white;
+.full{
+  grid-column:1 / -1;
 }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:15px;
+textarea{
+  resize:vertical;
+  min-height:80px;
 }
 
-.truck{
-background:#151515;
-border:1px solid #333;
-border-radius:17px;
-padding:17px;
+.add-btn{
+  margin-top:15px;
+  width:100%;
+  padding:14px;
+  background:#d4af37;
+  color:#000;
+  border:0;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.truck:hover{
-border-color:#d4af37;
+/* TRUCKS */
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
 }
 
-.truck-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:13px;
+.section-title h3{
+  color:#d4af37;
 }
 
-.truck-head h3{
-color:#d4af37;
+.refresh{
+  background:#171717;
+  color:#d4af37;
+  border:1px solid #444;
+  padding:8px 12px;
+  border-radius:7px;
+  cursor:pointer;
+}
+
+.trucks{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:17px;
+}
+
+.card{
+  background:linear-gradient(145deg,#151515,#0c0c0c);
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:18px;
+}
+
+.card:hover{
+  border-color:#d4af37;
+}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.card-top h3{
+  color:#d4af37;
 }
 
 .status{
-font-size:10px;
-padding:5px 8px;
-border-radius:15px;
-background:#16803c;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
 }
 
-.truck-info{
-color:#ccc;
-font-size:13px;
-padding:6px 0;
-border-bottom:1px solid #252525;
+.available{
+  background:#163b23;
+  color:#65e78d;
+}
+
+.booked{
+  background:#3b3114;
+  color:#e9c85d;
+}
+
+.notavailable{
+  background:#3b1717;
+  color:#ff7373;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 0;
+  border-bottom:1px solid #222;
+  font-size:13px;
+}
+
+.label{
+  color:#777;
+}
+
+.value{
+  color:#ddd;
+  text-align:right;
 }
 
 .actions{
-display:flex;
-gap:8px;
-margin-top:14px;
+  display:flex;
+  gap:8px;
+  margin-top:15px;
 }
 
 .edit{
-flex:1;
-background:#d4af37;
-color:#111;
+  flex:1;
+  background:#d4af37;
+  color:#000;
+  border:0;
+  padding:10px;
+  border-radius:7px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 .delete{
-flex:1;
-background:#512020;
-color:#ffaaaa;
+  flex:1;
+  background:#261212;
+  color:#ff6b6b;
+  border:1px solid #542020;
+  padding:10px;
+  border-radius:7px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 .message{
-text-align:center;
-color:#aaa;
-font-size:13px;
-margin:10px;
+  text-align:center;
+  color:#888;
+  padding:30px;
 }
+
+/* MOBILE */
 
 @media(max-width:600px){
 
-.two{
-grid-template-columns:1fr;
+  header{
+    padding:12px 15px;
+  }
+
+  .brand h1{
+    font-size:16px;
+  }
+
+  .brand img{
+    width:42px;
+    height:42px;
+  }
+
+  .container{
+    padding:20px 14px 50px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
 }
 
-.topbar{
-align-items:flex-start;
-}
-
-.topbar h2{
-font-size:17px;
-}
-
-}
 </style>
-
 </head>
 
 <body>
 
+
 <!-- LOGIN -->
 
-<section id="loginScreen">
+<div id="loginPage">
 
-<div class="login-box">
+  <div class="login-box">
 
-<img src="./icon-512.png"
-class="login-logo">
+    <img
+      src="./icon-512.png"
+      class="login-logo"
+      alt="Preserver Trans"
+    >
 
-<h1>PRESERVER TRANS LLC</h1>
+    <h1>Preserver Trans LLC</h1>
 
-<p>Dispatcher Secure Login</p>
+    <p>Secure Dispatcher Panel</p>
 
-<div class="field">
-<label>Email</label>
-<input
-id="email"
-type="email"
-placeholder="Dispatcher email">
+    <input
+      id="email"
+      class="input"
+      type="email"
+      placeholder="Dispatcher Email"
+    >
+
+    <input
+      id="password"
+      class="input"
+      type="password"
+      placeholder="Password"
+    >
+
+    <button
+      class="gold-btn"
+      onclick="login()"
+    >
+      🔐 Login
+    </button>
+
+    <div id="loginError" class="error"></div>
+
+  </div>
+
 </div>
-
-<div class="field">
-<label>Password</label>
-<input
-id="password"
-type="password"
-placeholder="Password">
-</div>
-
-<div id="loginError"
-class="error"></div>
-
-<button
-class="gold"
-onclick="login()">
-🔐 LOGIN
-</button>
-
-</div>
-
-</section>
 
 
 <!-- DASHBOARD -->
 
-<section id="dashboard">
+<div id="dashboard">
 
 <header>
 
-<img
-src="./icon-512.png"
-class="logo">
+  <div class="brand">
 
-<h1>PRESERVER TRANS LLC</h1>
+    <img src="./icon-512.png">
 
-<p>Secure Dispatcher Dashboard</p>
+    <div>
+      <h1>Preserver Trans LLC</h1>
+      <p>Dispatcher Management Panel</p>
+    </div>
+
+  </div>
+
+  <button
+    class="logout"
+    onclick="logout()"
+  >
+    Logout
+  </button>
 
 </header>
 
+
 <div class="container">
 
-<div class="topbar">
+  <div class="title">
 
-<h2>🚛 Truck Management</h2>
+    <h2>Truck Management</h2>
 
-<button
-class="logout"
-onclick="logout()">
-Logout
-</button>
+    <p>
+      Add and manage your available trucks.
+    </p>
 
-</div>
+  </div>
 
 
-<!-- ADD / EDIT FORM -->
+  <!-- ADD TRUCK -->
 
-<div class="form-box">
+  <div class="form-box">
 
-<h3 id="formTitle">
-➕ Add New Truck
-</h3>
+    <h3 id="formTitle">
+      ➕ Add New Truck
+    </h3>
 
-<div class="two">
+    <div class="form-grid">
 
-<div class="field">
-<label>Truck Number *</label>
-<input id="truck_number"
-placeholder="7867">
-</div>
+      <input
+        id="truck_number"
+        placeholder="Truck Number *"
+      >
 
-<div class="field">
-<label>Driver Name</label>
-<input id="driver_name"
-placeholder="Driver name">
-</div>
+      <input
+        id="driver_name"
+        placeholder="Driver Name"
+      >
 
-</div>
+      <input
+        id="location"
+        placeholder="Current Location *"
+      >
 
-<div class="two">
+      <input
+        id="available_date"
+        type="date"
+      >
 
-<div class="field">
-<label>Location *</label>
-<input id="location"
-placeholder="Kent, WA">
-</div>
+      <input
+        id="available_time"
+        type="time"
+      >
 
-<div class="field">
-<label>Lane</label>
-<input id="lane"
-placeholder="WA → CA">
-</div>
+      <input
+        id="lane"
+        placeholder="Lane (CA → WA)"
+      >
 
-</div>
+      <input
+        id="equipment"
+        placeholder="Equipment (53' Dry Van)"
+      >
 
-<div class="two">
+      <select id="status">
 
-<div class="field">
-<label>Available Date *</label>
-<input id="available_date"
-type="date">
-</div>
+        <option value="Available">
+          Available
+        </option>
 
-<div class="field">
-<label>Available Time *</label>
-<input id="available_time"
-type="time">
-</div>
+        <option value="Booked">
+          Booked
+        </option>
 
-</div>
+        <option value="Not Available">
+          Not Available
+        </option>
 
-<div class="two">
+      </select>
 
-<div class="field">
-<label>Equipment</label>
+      <textarea
+        id="notes"
+        class="full"
+        placeholder="Notes"
+      ></textarea>
 
-<select id="equipment">
+    </div>
 
-<option value="">Select equipment</option>
-<option>53' Dry Van</option>
-<option>Reefer</option>
-<option>Flatbed</option>
-<option>Step Deck</option>
-<option>Power Only</option>
+    <button
+      class="add-btn"
+      onclick="saveTruck()"
+      id="saveButton"
+    >
+      ADD TRUCK
+    </button>
 
-</select>
+  </div>
 
-</div>
 
-<div class="field">
-<label>Status</label>
+  <!-- TRUCK LIST -->
 
-<select id="status">
+  <div class="section-title">
 
-<option>Available</option>
-<option>Booked</option>
-<option>Not Available</option>
+    <h3>🚛 All Trucks</h3>
 
-</select>
+    <button
+      class="refresh"
+      onclick="loadTrucks()"
+    >
+      ↻ Refresh
+    </button>
 
-</div>
+  </div>
 
-</div>
+  <div id="truckList" class="trucks">
 
-<div class="field">
+    <div class="message">
+      Loading trucks...
+    </div>
 
-<label>Notes</label>
-
-<textarea
-id="notes"
-rows="3"
-placeholder="Additional information"></textarea>
-
-</div>
-
-<div class="form-buttons">
-
-<button
-class="gold"
-onclick="saveTruck()">
-💾 SAVE TRUCK
-</button>
-
-<button
-class="cancel"
-onclick="resetForm()">
-CLEAR
-</button>
+  </div>
 
 </div>
 
-<div id="message"
-class="message"></div>
-
 </div>
-
-
-<h2
-style="color:#d4af37;margin-bottom:14px;">
-All Trucks
-</h2>
-
-<div id="truckList"
-class="cards"></div>
-
-</div>
-
-</section>
 
 
 <script>
@@ -525,51 +600,51 @@ const SUPABASE_KEY =
 
 const supabaseClient =
 supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-let editingId=null;
+let editingId = null;
 
 
 /* LOGIN */
 
 async function login(){
 
-const email=
-document.getElementById("email").value.trim();
+  const email =
+  document.getElementById("email").value.trim();
 
-const password=
-document.getElementById("password").value;
+  const password =
+  document.getElementById("password").value;
 
-const error=
-document.getElementById("loginError");
+  const errorBox =
+  document.getElementById("loginError");
 
-error.innerText="";
+  errorBox.textContent = "";
 
-if(!email || !password){
+  if(!email || !password){
 
-error.innerText=
-"Please enter email and password.";
+    errorBox.textContent =
+    "Please enter email and password.";
 
-return;
-}
+    return;
+  }
 
-const {error:loginError}=
-await supabaseClient.auth.signInWithPassword({
-email:email,
-password:password
-});
+  const {error} =
+  await supabaseClient.auth.signInWithPassword({
+    email:email,
+    password:password
+  });
 
-if(loginError){
+  if(error){
 
-error.innerText=
-"Login failed. Check your email and password.";
+    errorBox.textContent =
+    error.message;
 
-return;
-}
+    return;
+  }
 
-showDashboard();
+  showDashboard();
 
 }
 
@@ -578,22 +653,14 @@ showDashboard();
 
 async function checkSession(){
 
-const {data}=
-await supabaseClient.auth.getSession();
+  const {data} =
+  await supabaseClient.auth.getSession();
 
-if(data.session){
+  if(data.session){
 
-showDashboard();
+    showDashboard();
 
-}else{
-
-document.getElementById("loginScreen")
-.style.display="flex";
-
-document.getElementById("dashboard")
-.style.display="none";
-
-}
+  }
 
 }
 
@@ -602,13 +669,13 @@ document.getElementById("dashboard")
 
 function showDashboard(){
 
-document.getElementById("loginScreen")
-.style.display="none";
+  document.getElementById("loginPage")
+    .style.display="none";
 
-document.getElementById("dashboard")
-.style.display="block";
+  document.getElementById("dashboard")
+    .style.display="block";
 
-loadTrucks();
+  loadTrucks();
 
 }
 
@@ -617,116 +684,154 @@ loadTrucks();
 
 async function logout(){
 
-await supabaseClient.auth.signOut();
+  await supabaseClient.auth.signOut();
 
-location.reload();
+  location.reload();
 
 }
 
 
-/* LOAD TRUCKS */
+/* LOAD */
 
 async function loadTrucks(){
 
-const list=
-document.getElementById("truckList");
+  const list =
+  document.getElementById("truckList");
 
-list.innerHTML=
-"<div class='message'>Loading trucks...</div>";
+  list.innerHTML =
+  `<div class="message">Loading trucks...</div>`;
 
-const {data,error}=
-await supabaseClient
-.from("trucks")
-.select("*")
-.order("id",{ascending:false});
+  const {data,error} =
+  await supabaseClient
+  .from("trucks")
+  .select("*")
+  .order("id",{ascending:false});
 
-if(error){
+  if(error){
 
-list.innerHTML=
-"<div class='message'>Unable to load trucks.</div>";
+    list.innerHTML =
+    `<div class="message">
+      Error loading trucks: ${error.message}
+    </div>`;
 
-console.error(error);
+    return;
+  }
 
-return;
-}
+  if(!data.length){
 
-list.innerHTML="";
+    list.innerHTML =
+    `<div class="message">
+      No trucks added yet.
+    </div>`;
 
-if(!data || data.length===0){
+    return;
+  }
 
-list.innerHTML=
-"<div class='message'>No trucks added yet.</div>";
+  list.innerHTML="";
 
-return;
-}
+  data.forEach(truck => {
 
-data.forEach(truck=>{
+    const card =
+    document.createElement("div");
 
-const card=
-document.createElement("div");
+    card.className="card";
 
-card.className="truck";
+    let statusClass="available";
 
-card.innerHTML=`
+    if(truck.status==="Booked"){
+      statusClass="booked";
+    }
 
-<div class="truck-head">
+    if(truck.status==="Not Available"){
+      statusClass="notavailable";
+    }
 
-<h3>🚛 #${safe(truck.truck_number)}</h3>
+    card.innerHTML=`
 
-<span class="status">
-${safe(truck.status)}
-</span>
+      <div class="card-top">
 
-</div>
+        <h3>
+          🚛 #${escapeHTML(truck.truck_number)}
+        </h3>
 
-<div class="truck-info">
-Driver: ${safe(truck.driver_name||"N/A")}
-</div>
+        <span class="status ${statusClass}">
+          ${escapeHTML(truck.status || "Available")}
+        </span>
 
-<div class="truck-info">
-Location: ${safe(truck.location)}
-</div>
+      </div>
 
-<div class="truck-info">
-Date: ${safe(truck.available_date)}
-</div>
+      <div class="row">
+        <span class="label">Driver</span>
+        <span class="value">
+          ${escapeHTML(truck.driver_name || "-")}
+        </span>
+      </div>
 
-<div class="truck-info">
-Time: ${safe(truck.available_time)}
-</div>
+      <div class="row">
+        <span class="label">Location</span>
+        <span class="value">
+          ${escapeHTML(truck.location || "-")}
+        </span>
+      </div>
 
-<div class="truck-info">
-Lane: ${safe(truck.lane||"N/A")}
-</div>
+      <div class="row">
+        <span class="label">Date</span>
+        <span class="value">
+          ${escapeHTML(truck.available_date || "-")}
+        </span>
+      </div>
 
-<div class="truck-info">
-Equipment: ${safe(truck.equipment||"N/A")}
-</div>
+      <div class="row">
+        <span class="label">Time</span>
+        <span class="value">
+          ${escapeHTML(truck.available_time || "-")}
+        </span>
+      </div>
 
-<div class="truck-info">
-Notes: ${safe(truck.notes||"N/A")}
-</div>
+      <div class="row">
+        <span class="label">Lane</span>
+        <span class="value">
+          ${escapeHTML(truck.lane || "-")}
+        </span>
+      </div>
 
-<div class="actions">
+      <div class="row">
+        <span class="label">Equipment</span>
+        <span class="value">
+          ${escapeHTML(truck.equipment || "-")}
+        </span>
+      </div>
 
-<button
-class="edit"
-onclick='editTruck(${JSON.stringify(truck)})'>
-✏️ EDIT
-</button>
+      <div class="row">
+        <span class="label">Notes</span>
+        <span class="value">
+          ${escapeHTML(truck.notes || "-")}
+        </span>
+      </div>
 
-<button
-class="delete"
-onclick="deleteTruck(${truck.id})">
-🗑️ DELETE
-</button>
+      <div class="actions">
 
-</div>
-`;
+        <button
+          class="edit"
+          onclick='editTruck(${JSON.stringify(truck)})'
+        >
+          ✏️ Edit
+        </button>
 
-list.appendChild(card);
+        <button
+          class="delete"
+          onclick="deleteTruck(${truck.id})"
+        >
+          🗑 Delete
+        </button>
 
-});
+      </div>
+
+    `;
+
+    list.appendChild(card);
+
+  });
 
 }
 
@@ -735,86 +840,85 @@ list.appendChild(card);
 
 async function saveTruck(){
 
-const truck={
+  const truck={
 
-truck_number:
-document.getElementById("truck_number").value.trim(),
+    truck_number:
+    document.getElementById("truck_number").value.trim(),
 
-driver_name:
-document.getElementById("driver_name").value.trim(),
+    driver_name:
+    document.getElementById("driver_name").value.trim(),
 
-location:
-document.getElementById("location").value.trim(),
+    location:
+    document.getElementById("location").value.trim(),
 
-available_date:
-document.getElementById("available_date").value,
+    available_date:
+    document.getElementById("available_date").value,
 
-available_time:
-document.getElementById("available_time").value,
+    available_time:
+    document.getElementById("available_time").value,
 
-lane:
-document.getElementById("lane").value.trim(),
+    lane:
+    document.getElementById("lane").value.trim(),
 
-equipment:
-document.getElementById("equipment").value,
+    equipment:
+    document.getElementById("equipment").value.trim(),
 
-status:
-document.getElementById("status").value,
+    status:
+    document.getElementById("status").value,
 
-notes:
-document.getElementById("notes").value.trim()
+    notes:
+    document.getElementById("notes").value.trim()
 
-};
+  };
 
-const message=
-document.getElementById("message");
 
-if(!truck.truck_number ||
-!truck.location ||
-!truck.available_date ||
-!truck.available_time){
+  if(!truck.truck_number || !truck.location){
 
-message.innerText=
-"Please fill all required fields.";
+    alert("Truck Number and Location are required.");
 
-return;
-}
+    return;
+  }
 
-message.innerText="Saving...";
 
-let result;
+  let result;
 
-if(editingId){
 
-result=await supabaseClient
-.from("trucks")
-.update(truck)
-.eq("id",editingId);
+  if(editingId){
 
-}else{
+    result =
+    await supabaseClient
+    .from("trucks")
+    .update(truck)
+    .eq("id",editingId);
 
-result=await supabaseClient
-.from("trucks")
-.insert(truck);
+  }else{
 
-}
+    result =
+    await supabaseClient
+    .from("trucks")
+    .insert(truck);
 
-if(result.error){
+  }
 
-message.innerText=
-"Error: "+result.error.message;
 
-return;
-}
+  if(result.error){
 
-message.innerText=
-editingId
-?"Truck updated successfully."
-:"Truck added successfully.";
+    alert(result.error.message);
 
-resetForm();
+    return;
+  }
 
-loadTrucks();
+
+  alert(
+    editingId
+    ? "Truck updated successfully!"
+    : "Truck added successfully!"
+  );
+
+
+  resetForm();
+
+  loadTrucks();
 
 }
 
@@ -823,42 +927,45 @@ loadTrucks();
 
 function editTruck(truck){
 
-editingId=truck.id;
+  editingId=truck.id;
 
-document.getElementById("formTitle")
-.innerText="✏️ Edit Truck";
+  document.getElementById("formTitle")
+    .textContent="✏️ Edit Truck";
 
-document.getElementById("truck_number")
-.value=truck.truck_number||"";
+  document.getElementById("saveButton")
+    .textContent="UPDATE TRUCK";
 
-document.getElementById("driver_name")
-.value=truck.driver_name||"";
+  document.getElementById("truck_number").value =
+    truck.truck_number || "";
 
-document.getElementById("location")
-.value=truck.location||"";
+  document.getElementById("driver_name").value =
+    truck.driver_name || "";
 
-document.getElementById("available_date")
-.value=truck.available_date||"";
+  document.getElementById("location").value =
+    truck.location || "";
 
-document.getElementById("available_time")
-.value=truck.available_time||"";
+  document.getElementById("available_date").value =
+    truck.available_date || "";
 
-document.getElementById("lane")
-.value=truck.lane||"";
+  document.getElementById("available_time").value =
+    truck.available_time || "";
 
-document.getElementById("equipment")
-.value=truck.equipment||"";
+  document.getElementById("lane").value =
+    truck.lane || "";
 
-document.getElementById("status")
-.value=truck.status||"Available";
+  document.getElementById("equipment").value =
+    truck.equipment || "";
 
-document.getElementById("notes")
-.value=truck.notes||"";
+  document.getElementById("status").value =
+    truck.status || "Available";
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+  document.getElementById("notes").value =
+    truck.notes || "";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
@@ -867,24 +974,26 @@ behavior:"smooth"
 
 async function deleteTruck(id){
 
-if(!confirm(
-"Are you sure you want to delete this truck?"
-)) return;
+  if(!confirm(
+    "Are you sure you want to delete this truck?"
+  )){
+    return;
+  }
 
-const {error}=
-await supabaseClient
-.from("trucks")
-.delete()
-.eq("id",id);
+  const {error} =
+  await supabaseClient
+  .from("trucks")
+  .delete()
+  .eq("id",id);
 
-if(error){
+  if(error){
 
-alert("Delete failed: "+error.message);
+    alert(error.message);
 
-return;
-}
+    return;
+  }
 
-loadTrucks();
+  loadTrucks();
 
 }
 
@@ -893,35 +1002,37 @@ loadTrucks();
 
 function resetForm(){
 
-editingId=null;
+  editingId=null;
 
-document.getElementById("formTitle")
-.innerText="➕ Add New Truck";
+  document.getElementById("formTitle")
+    .textContent="➕ Add New Truck";
 
-document.getElementById("truck_number").value="";
-document.getElementById("driver_name").value="";
-document.getElementById("location").value="";
-document.getElementById("available_date").value="";
-document.getElementById("available_time").value="";
-document.getElementById("lane").value="";
-document.getElementById("equipment").value="";
-document.getElementById("status").value="Available";
-document.getElementById("notes").value="";
-document.getElementById("message").innerText="";
+  document.getElementById("saveButton")
+    .textContent="ADD TRUCK";
+
+  document.getElementById("truck_number").value="";
+  document.getElementById("driver_name").value="";
+  document.getElementById("location").value="";
+  document.getElementById("available_date").value="";
+  document.getElementById("available_time").value="";
+  document.getElementById("lane").value="";
+  document.getElementById("equipment").value="";
+  document.getElementById("status").value="Available";
+  document.getElementById("notes").value="";
 
 }
 
 
 /* ESCAPE */
 
-function safe(value){
+function escapeHTML(value){
 
-return String(value ?? "")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+  return String(value ?? "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 
 }
 
@@ -930,13 +1041,15 @@ return String(value ?? "")
 
 if("serviceWorker" in navigator){
 
-window.addEventListener("load",()=>{
+  window.addEventListener("load",()=>{
 
-navigator.serviceWorker
-.register("./sw.js")
-.catch(error=>console.log(error));
+    navigator.serviceWorker
+    .register("./sw.js")
+    .catch(error =>
+      console.log("SW error:",error)
+    );
 
-});
+  });
 
 }
 
